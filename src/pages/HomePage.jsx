@@ -3,7 +3,7 @@ import { Header } from "../components/Header";
 export const HomePage = () => {
   return (
     <>
-      <div className="h-screen relative overflow-y-auto bg-white">
+      <div className="h-screen relative overflow-x-hidden bg-white ">
         <Header />
         <main className="h-[calc(100vh-5rem)] relative">
           <div className="relative h-full bg-[url(/background.png)] bg-cover bg-center flex items-center md:justify-start px-8 justify-center">
