@@ -1,8 +1,29 @@
-import React, { useState } from "react";
-import { Link } from "react-router";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router";
 import { PasswordInput } from "../components/PasswordInput";
+import { useRegister } from "../hooks/useRegister";
+import { useUpdateRegisterForm } from "../hooks/useUpdateRegisterForm";
 
 export const RegisterPage = () => {
+  const { dataForm, updateRegisterForm, cleanRegisterForm } =
+    useUpdateRegisterForm();
+  const { createUser } = useRegister();
+
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (dataForm.password !== dataForm.confirmPassword) {
+      alert("Las contraseñas no coinciden");
+      return;
+    }
+
+    createUser({ dataForm });
+    cleanRegisterForm();
+    navigate("/login");
+  };
+
   return (
     <div className="flex justify-center md:items-center min-h-screen md:px-4 bg-gray-100">
       <Link to={"/home"}>
@@ -25,7 +46,7 @@ export const RegisterPage = () => {
         </svg>
       </Link>
       <div className="px-5 py-6 shadow-2xl md:rounded-lg w-full md:max-w-md bg-white flex flex-col items-center justify-center">
-        <form action="" className="flex flex-col gap-5">
+        <form action="" className="flex flex-col gap-5" onSubmit={handleSubmit}>
           {/* Título */}
           <div className="flex flex-col items-center justify-center gap-2">
             <h3 className="text-lg font-bold text-center">Crear Cuenta</h3>
@@ -46,6 +67,8 @@ export const RegisterPage = () => {
               placeholder="Tu nombre"
               id="name"
               className="border border-black/10 shadow px-3 py-2 rounded-md focus:outline-none text-sm"
+              onChange={updateRegisterForm}
+              value={dataForm.name}
             />
           </div>
 
@@ -61,14 +84,24 @@ export const RegisterPage = () => {
               placeholder="example@gmail.com"
               id="email"
               className="border border-black/10 shadow px-3 py-2 rounded-md focus:outline-none text-sm"
+              onChange={updateRegisterForm}
+              value={dataForm.email}
             />
           </div>
 
           {/* Campo de Contraseña */}
-          <PasswordInput label={"Contraseña"}></PasswordInput>
+          <PasswordInput
+            label={"Contraseña"}
+            handleChange={updateRegisterForm}
+            value={dataForm.password}
+          ></PasswordInput>
 
           {/* Campo de Confirmar Contraseña */}
-          <PasswordInput label={"Confirmar contraseña"}></PasswordInput>
+          <PasswordInput
+            label={"Confirmar contraseña"}
+            value={dataForm.confirmPassword}
+            handleChange={updateRegisterForm}
+          ></PasswordInput>
 
           {/* Botones */}
           <section className="flex flex-col gap-3">

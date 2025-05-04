@@ -2,14 +2,12 @@ import { useState } from "react";
 import { Menu } from "./Menu";
 import { Nav } from "./Nav";
 import { Link, useNavigate } from "react-router";
+import { useAuth } from "../context/AuthContext";
 
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
-
-  const handleLogin = () => {
-    navigate("/login");
-  };
+  const { authenticatedUser, isAuthenticated } = useAuth();
 
   return (
     <header className="h-20 w-screen flex items-center justify-between md:px-16 px-6 bg-white/40 shadow-md z-10 top-0 sticky backdrop-blur-sm">
@@ -21,18 +19,26 @@ export const Header = () => {
 
       <div className="md:flex space-x-4 items-center hidden">
         <Nav />
-        <button
-          className="py-2 px-4 border-1 border-black ml-10 cursor-pointer hover:bg-black hover:text-white transition-colors duration-100"
-          onClick={handleLogin}
-        >
-          Iniciar Sesion
-        </button>
-        <Link
-          className="py-2 px-4 hover:bg-black hover:text-white cursor-pointer border-1 border-black transition-color duration-100 "
-          to="/register"
-        >
-          Registrarse
-        </Link>
+        {isAuthenticated ? (
+          <div className="px-3 py-1 rounded-full bg-red-600 text-white text-2xl border-2 border-black text-center">
+            {authenticatedUser.name.charAt(0).toUpperCase()}
+          </div>
+        ) : (
+          <div className="flex items-center gap-4">
+            <Link
+              className="py-2 px-4 border-1 border-black ml-10 cursor-pointer hover:bg-black hover:text-white transition-colors duration-100"
+              to="/login"
+            >
+              Iniciar Sesion
+            </Link>
+            <Link
+              className="py-2 px-4 hover:bg-black hover:text-white cursor-pointer border-1 border-black transition-color duration-100 "
+              to="/register"
+            >
+              Registrarse
+            </Link>
+          </div>
+        )}
       </div>
 
       <div
@@ -77,7 +83,7 @@ export const Header = () => {
           />
         </svg>
       </div>
-      <Menu isOpen={isOpen} handleLogin={handleLogin} />
+      <Menu isOpen={isOpen} />
       {isOpen && (
         <div className="absolute top-0 left-0 w-screen h-screen bg-black opacity-40"></div>
       )}

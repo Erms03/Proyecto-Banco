@@ -1,9 +1,10 @@
 import { Header } from "../components/Header";
-
+import { useState } from "react";
 export const HomePage = () => {
   return (
     <>
       <div className="h-screen relative overflow-x-hidden bg-white ">
+        <div className="h-10 w-10">Click</div>
         <Header />
         <main className="h-[calc(100vh-5rem)] relative">
           <div className="relative h-full bg-[url(/background.png)] bg-cover bg-center flex items-center md:justify-start px-8 justify-center">

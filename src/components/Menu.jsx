@@ -1,4 +1,6 @@
-export const Menu = ({ isOpen, handleLogin }) => {
+import { Link } from "react-router";
+
+export const Menu = ({ isOpen }) => {
   return (
     <div
       className={`absolute top-0 right-0 h-screen w-70 bg-white z-10  duration-500 ease-in-out transition-transform ${
@@ -10,9 +12,9 @@ export const Menu = ({ isOpen, handleLogin }) => {
           isOpen ? "opacity-100" : "opacity-0"
         }`}
       >
-        <div
+        <Link
+          to={"/login"}
           className="flex items-center gap-2 text-xl cursor-pointer"
-          onClick={handleLogin}
         >
           <svg
             className="w-10 h-10 text-gray-800 dark:text-white"
@@ -30,7 +32,7 @@ export const Menu = ({ isOpen, handleLogin }) => {
             />
           </svg>
           Iniciar Sesion
-        </div>
+        </Link>
         <ul className="mt-10 flex flex-col gap-5 text-xl ml-12">
           <li>
             <a href="/home">Inicio</a>

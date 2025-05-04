@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 
-export const PasswordInput = ({ label }) => {
+export const PasswordInput = ({ label, value, handleChange }) => {
   const [revealPassword, setRevealPassword] = useState(false);
 
   const handleRevealPassword = () => {
@@ -16,11 +16,14 @@ export const PasswordInput = ({ label }) => {
       <div className="relative">
         <input
           type={revealPassword ? "text" : "password"}
-          name="password"
+          name={label === "Contraseña" ? "password" : "confirmPassword"}
           id="password"
           placeholder="********"
           minLength={8}
           className="border border-black/10 shadow px-3 py-2 rounded-lg focus:outline-none w-full text-sm md:text-base"
+          required
+          value={value}
+          onChange={handleChange}
         />
         {revealPassword ? (
           <svg
