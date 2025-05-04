@@ -183,7 +183,7 @@ export const RegisterPage = () => {
             </button>
             <div className="flex items-center justify-center gap-2 border py-2 px-4 rounded-md cursor-pointer hover:bg-gray-100 transition-colors duration-200">
               <img
-                src="src/assets/Google-logo.png"
+                src="/Google-logo.png"
                 alt="Logo Google"
                 className="w-5 h-5"
               />

@@ -14,7 +14,7 @@ export const Header = () => {
   return (
     <header className="h-20 w-full flex items-center justify-between md:px-16 px-6 bg-white/40 shadow-md z-10 top-0 sticky backdrop-blur-sm">
       <img
-        src="src/assets/images.png"
+        src="/images.png"
         alt="Page Logo"
         className="h-16 w-56 md:w-auto md:h-auto"
       />

@@ -6,7 +6,7 @@ export const HomePage = () => {
       <div className="h-screen relative overflow-y-auto bg-white">
         <Header />
         <main className="h-[calc(100vh-5rem)] relative">
-          <div className="relative h-full bg-[url(src/assets/background.png)] bg-cover bg-center flex items-center md:justify-start px-8 justify-center">
+          <div className="relative h-full bg-[url(/background.png)] bg-cover bg-center flex items-center md:justify-start px-8 justify-center">
             {/* Superposición oscura */}
             <div className="absolute inset-0 bg-black/30"></div>
             <section className="relative text-white md:max-w-2xl md:ml-20 ">
