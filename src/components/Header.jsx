@@ -14,21 +14,21 @@ export const Header = () => {
   return (
     <header className="h-20 w-full flex items-center justify-between md:px-16 px-6 bg-white/40 shadow-md z-10 top-0 sticky backdrop-blur-sm">
       <img
-        src="src/assets/images.jpeg"
+        src="src/assets/images.png"
         alt="Page Logo"
-        className="bg-white h-16 w-56 md:w-auto md:h-auto"
+        className="h-16 w-56 md:w-auto md:h-auto"
       />
 
       <div className="md:flex space-x-4 items-center hidden">
         <Nav />
         <button
-          className="py-2 px-4 border-1 border-black ml-10 cursor-pointer"
+          className="py-2 px-4 border-1 border-black ml-10 cursor-pointer hover:bg-black hover:text-white transition-colors duration-100"
           onClick={handleLogin}
         >
           Iniciar Sesion
         </button>
         <Link
-          className="py-2 px-4 bg-black text-white cursor-pointer"
+          className="py-2 px-4 hover:bg-black hover:text-white cursor-pointer border-1 border-black transition-color duration-100 "
           to="/register"
         >
           Registrarse
