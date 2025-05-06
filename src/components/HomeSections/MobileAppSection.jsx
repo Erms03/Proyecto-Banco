@@ -83,7 +83,7 @@ export const MobileAppSection = () => {
             <div className="absolute -inset-4 bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-3xl blur-xl opacity-70"></div>
             <div className="relative">
               <img
-                src="/PhonePhoto.webp"
+                src="/PhoneApp.webp"
                 alt="Aplicación móvil"
                 className="mx-auto rounded-3xl shadow-2xl"
               />
