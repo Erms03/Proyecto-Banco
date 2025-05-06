@@ -67,7 +67,7 @@ export const Hero = () => {
       </div>
 
       {/* Indicador de scroll */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce hidden lg:block">
         <div className="w-8 h-12 rounded-full border-2 border-white/30 flex items-start justify-center p-1">
           <div className="w-1 h-2 bg-white/60 rounded-full animate-pulse"></div>
         </div>
