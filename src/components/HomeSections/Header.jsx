@@ -12,7 +12,7 @@ export const Header = () => {
     <header className="h-16 w-full flex items-center justify-between px-4 md:px-6 lg:px-16 bg-white/95 shadow-sm z-50 top-0 sticky backdrop-blur-sm">
       <Link to="/" className="flex items-center">
         <img
-          src="/images.png"
+          src="/Banco-Logo.png"
           alt="Banco Metropolitano"
           className="h-12 w-auto"
         />
