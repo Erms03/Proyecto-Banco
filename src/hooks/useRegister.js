@@ -33,7 +33,6 @@ export const useRegister = () => {
     };
 
     setUsers([...users, newUser]);
-    alert("Usuario registrado con éxito");
   };
 
   return {

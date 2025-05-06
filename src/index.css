@@ -1,14 +1,108 @@
 @import "tailwindcss";
+@tailwind utilities;
+
+@font-face {
+  font-family: Lora;
+  src: url(public/Lora-VariableFont_wght.woff2) format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: normal;
+}
 
 @layer base {
+  * {
+    @apply font-lora;
+  }
   body {
     @apply h-screen font-medium font-sans bg-gray-100 relative scroll-smooth;
   }
 }
 
+.bg-pattern {
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Animaciones para los formularios */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.5s ease-out forwards;
+}
+
+/* Transiciones suaves para los inputs */
+input,
+button {
+  transition: all 0.2s ease-in-out;
+}
+
+input:focus {
+  transform: translateY(-1px);
+}
+
+button:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
 @theme {
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-float-delay: float-delay 8s ease-in-out infinite;
   --animate-fade-in-left: fade-in-left 0.4s ease-in-out;
   --animate-fade-in-down: fade-in-down 0.4s ease-in-out;
+  --animate-fade-in-fade: fade-in-fade 2s ease-in-out;
+  --animate-fade-in-out: fade-in-out 2s ease-in-out;
+  --animate-scale-grow: scale-grow 3s linear infinite;
+  --animate-float-card: float-card 5s ease-in-out infinite;
+  --font-lora: "Lora", sans-serif;
+
+  @keyframes float-card {
+    0% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-30px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+
+  @keyframes scale-grow {
+    0%,
+    100% {
+      scale: 1;
+    }
+    25%,
+    75% {
+      scale: 1.1;
+    }
+    50% {
+      scale: 1.2;
+    }
+  }
+
+  @keyframes {
+    0% {
+      opacity: 0;
+    }
+    25% {
+      opacity: 100;
+    }
+    75% {
+      opacity: 100;
+    }
+    90% {
+      opacity: 0;
+    }
+  }
 
   @keyframes fade-in-left {
     0% {
@@ -31,5 +125,43 @@
       opacity: 100;
       transform: translateY(0);
     }
+  }
+
+  @keyframes fade-in-out {
+    0% {
+      opacity: 0;
+    }
+    20% {
+      opacity: 1;
+    }
+    80% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+}
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes float-delay {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+  100% {
+    transform: translateY(0px);
   }
 }

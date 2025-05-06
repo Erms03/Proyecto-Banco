@@ -1,72 +1,44 @@
-import React from "react";
+"use client";
+
 import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 
-export const PasswordInput = ({ label, value, handleChange }) => {
-  const [revealPassword, setRevealPassword] = useState(false);
+export const PasswordInput = ({ label, value, handleChange, name }) => {
+  const [showPassword, setShowPassword] = useState(false);
 
-  const handleRevealPassword = () => {
-    setRevealPassword(!revealPassword);
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
-    <div className="flex flex-col gap-1">
-      <label htmlFor="password" className="text-sm md:text-base font-medium">
+    <div className="flex flex-col gap-1.5">
+      <label
+        htmlFor={name || "password"}
+        className="text-sm font-medium text-gray-700"
+      >
         {label}
       </label>
       <div className="relative">
         <input
-          type={revealPassword ? "text" : "password"}
-          name={label === "Contraseña" ? "password" : "confirmPassword"}
-          id="password"
-          placeholder="********"
-          minLength={8}
-          className="border border-black/10 shadow px-3 py-2 rounded-lg focus:outline-none w-full text-sm md:text-base"
+          type={showPassword ? "text" : "password"}
           required
+          name={name || "password"}
+          id={name || "password"}
+          placeholder="••••••••"
+          className="w-full border border-gray-200 shadow-sm px-3 py-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 text-sm"
           value={value}
           onChange={handleChange}
         />
-        {revealPassword ? (
-          <svg
-            className="w-5 h-5 md:w-6 md:h-6 text-gray-800 dark:text-white absolute top-1/2 right-4 transform -translate-y-1/2 cursor-pointer"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            fill="none"
-            viewBox="0 0 24 24"
-            onClick={handleRevealPassword}
-          >
-            <path
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M3.933 13.909A4.357 4.357 0 0 1 3 12c0-1 4-6 9-6m7.6 3.8A5.068 5.068 0 0 1 21 12c0 1-3 6-9 6-.314 0-.62-.014-.918-.04M5 19 19 5m-4 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-            />
-          </svg>
-        ) : (
-          <svg
-            className="w-5 h-5 md:w-6 md:h-6 text-gray-800 dark:text-white absolute top-1/2 right-4 transform -translate-y-1/2 cursor-pointer"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            fill="none"
-            viewBox="0 0 24 24"
-            onClick={handleRevealPassword}
-          >
-            <path
-              stroke="currentColor"
-              strokeWidth="2"
-              d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z"
-            />
-            <path
-              stroke="currentColor"
-              strokeWidth="2"
-              d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-            />
-          </svg>
-        )}
+        <button
+          type="button"
+          onClick={togglePasswordVisibility}
+          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 transition-colors"
+          aria-label={
+            showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
+          }
+        >
+          {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+        </button>
       </div>
     </div>
   );

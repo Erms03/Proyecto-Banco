@@ -8,7 +8,7 @@ export const useUpdateRegisterForm = () => {
     confirmPassword: "",
   });
 
-  const updateRegisterForm = (e) => {
+  const updateForm = (e) => {
     const { name, value } = e.target;
     setDataForm((prev) => ({
       ...prev,
@@ -25,5 +25,5 @@ export const useUpdateRegisterForm = () => {
     });
   };
 
-  return { dataForm, updateRegisterForm, cleanRegisterForm };
+  return { dataForm, updateForm, cleanRegisterForm };
 };
