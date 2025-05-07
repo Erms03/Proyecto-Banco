@@ -1,6 +1,13 @@
+"use client";
+
 import { Link } from "react-router";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 
 export const MobileAppSection = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.2 });
+
   const features = [
     "Transferencias inmediatas sin comisiones",
     "Pago de servicios y tarjetas",
@@ -9,27 +16,118 @@ export const MobileAppSection = () => {
     "Bloqueo y desbloqueo de tarjetas",
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.3,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, x: -20 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 15,
+      },
+    },
+  };
+
+  const imageVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 15,
+        delay: 0.4,
+      },
+    },
+  };
+
   return (
-    <section className="py-20 bg-gradient-to-br from-green-50 to-emerald-50">
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="flex flex-col md:flex-row items-center">
-          <div className="md:w-1/2 md:pr-12 mb-10 md:mb-0">
-            <span className="inline-block px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium tracking-wide mb-6">
+    <section className="py-20 bg-gradient-to-br from-teal-50 to-emerald-50 relative overflow-hidden">
+      {/* Elementos decorativos */}
+      <div className="absolute inset-0 overflow-hidden">
+        <motion.div
+          className="absolute top-40 -left-20 w-64 h-64 bg-teal-500/10 rounded-full blur-3xl"
+          animate={{
+            y: [0, 20, 0],
+            x: [0, 15, 0],
+          }}
+          transition={{
+            repeat: Number.POSITIVE_INFINITY,
+            duration: 18,
+            ease: "easeInOut",
+          }}
+        ></motion.div>
+        <motion.div
+          className="absolute bottom-40 -right-20 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl"
+          animate={{
+            y: [0, -25, 0],
+            x: [0, -20, 0],
+          }}
+          transition={{
+            repeat: Number.POSITIVE_INFINITY,
+            duration: 20,
+            ease: "easeInOut",
+          }}
+        ></motion.div>
+      </div>
+
+      <div className="container mx-auto px-4 md:px-6 relative z-10">
+        <div ref={ref} className="flex flex-col md:flex-row items-center">
+          <motion.div
+            className="md:w-1/2 md:pr-12 mb-10 md:mb-0"
+            variants={containerVariants}
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+          >
+            <motion.span
+              className="inline-block px-3 py-1 bg-teal-100 text-teal-700 rounded-full text-sm font-medium tracking-wide mb-6"
+              variants={itemVariants}
+            >
               Banca Móvil
-            </span>
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+            </motion.span>
+            <motion.h2
+              className="text-3xl md:text-4xl font-bold text-gray-900 mb-6"
+              variants={itemVariants}
+            >
               Tu banco en la palma de tu mano
-            </h2>
-            <p className="text-lg text-gray-600 mb-8">
+            </motion.h2>
+            <motion.p
+              className="text-lg text-gray-600 mb-8"
+              variants={itemVariants}
+            >
               Descarga nuestra aplicación móvil y disfruta de todas las
               funcionalidades bancarias desde cualquier lugar y en cualquier
               momento.
-            </p>
+            </motion.p>
 
-            <ul className="space-y-4 mb-8">
+            <motion.ul className="space-y-4 mb-8" variants={containerVariants}>
               {features.map((feature, index) => (
-                <li key={index} className="flex items-start">
-                  <div className="flex-shrink-0 w-5 h-5 bg-green-500 rounded-full flex items-center justify-center mt-1">
+                <motion.li
+                  key={index}
+                  className="flex items-start"
+                  variants={itemVariants}
+                  custom={index}
+                  whileHover={{ x: 5 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 10 }}
+                >
+                  <motion.div
+                    className="flex-shrink-0 w-5 h-5 bg-teal-500 rounded-full flex items-center justify-center mt-1"
+                    whileHover={{ scale: 1.2 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                  >
                     <svg
                       className="w-3 h-3 text-white"
                       fill="none"
@@ -43,57 +141,102 @@ export const MobileAppSection = () => {
                         d="M5 13l4 4L19 7"
                       ></path>
                     </svg>
-                  </div>
+                  </motion.div>
                   <span className="ml-3 text-gray-600">{feature}</span>
-                </li>
+                </motion.li>
               ))}
-            </ul>
+            </motion.ul>
 
-            <div className="flex space-x-4">
-              <Link
-                to="#"
-                className="flex items-center bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors"
+            <motion.div
+              className="flex space-x-4"
+              variants={containerVariants}
+              initial="hidden"
+              animate={isInView ? "visible" : "hidden"}
+            >
+              <motion.div
+                variants={itemVariants}
+                whileHover={{ scale: 1.05, y: -5 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ type: "spring", stiffness: 400, damping: 10 }}
               >
-                <svg
-                  className="w-7 h-7 mr-2"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
+                <Link
+                  to="#"
+                  className="flex items-center bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors"
                 >
-                  <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 8.42 7.31c1.33.07 2.25.7 3.01.72.96-.04 2.03-.8 3.02-.77 3.56.3 5.23 3.68 5.23 3.68-3.25 1.57-2.72 5.3.37 6.75-.92 1.65-2.13 3.29-3 3.59zm-3.2-15.5c.83-1.17.89-2.24.66-3.28-1.25.13-2.68.9-3.42 1.97-.66.94-1.1 2.22-.9 3.37 1.19.05 2.47-.59 3.66-2.06z" />
-                </svg>
-                App Store
-              </Link>
-              <Link
-                to="#"
-                className="flex items-center bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors"
+                  <svg
+                    className="w-7 h-7 mr-2"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 8.42 7.31c1.33.07 2.25.7 3.01.72.96-.04 2.03-.8 3.02-.77 3.56.3 5.23 3.68 5.23 3.68-3.25 1.57-2.72 5.3.37 6.75-.92 1.65-2.13 3.29-3 3.59zm-3.2-15.5c.83-1.17.89-2.24.66-3.28-1.25.13-2.68.9-3.42 1.97-.66.94-1.1 2.22-.9 3.37 1.19.05 2.47-.59 3.66-2.06z" />
+                  </svg>
+                  App Store
+                </Link>
+              </motion.div>
+              <motion.div
+                variants={itemVariants}
+                whileHover={{ scale: 1.05, y: -5 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ type: "spring", stiffness: 400, damping: 10 }}
               >
-                <svg
-                  className="w-6 h-6 mr-2"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
+                <Link
+                  to="#"
+                  className="flex items-center bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors"
                 >
-                  <path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 5.371l2.97-1.715 7.995 4.63c.825.478 1.1 1.377.594 2.123-.044.063-.094.124-.148.182l-8.233 4.811-3.073-1.75L24 12l-9.5-4.815z" />
-                </svg>
-                Google Play
-              </Link>
-            </div>
-          </div>
+                  <svg
+                    className="w-6 h-6 mr-2"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 5.371l2.97-1.715 7.995 4.63c.825.478 1.1 1.377.594 2.123-.044.063-.094.124-.148.182l-8.233 4.811-3.073-1.75L24 12l-9.5-4.815z" />
+                  </svg>
+                  Google Play
+                </Link>
+              </motion.div>
+            </motion.div>
+          </motion.div>
 
-          <div className="md:w-1/2 relative">
-            <div className="absolute -inset-4 bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-3xl blur-xl opacity-70"></div>
+          <motion.div
+            className="md:w-1/2 relative"
+            variants={imageVariants}
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+          >
+            <motion.div
+              className="absolute -inset-4 bg-gradient-to-r from-teal-500/20 to-emerald-500/20 rounded-3xl blur-xl opacity-70"
+              animate={{
+                scale: [1, 1.05, 1],
+                rotate: [0, 1, 0],
+              }}
+              transition={{
+                repeat: Number.POSITIVE_INFINITY,
+                duration: 8,
+                ease: "easeInOut",
+              }}
+            ></motion.div>
             <div className="relative">
-              <img
+              <motion.img
                 src="/PhoneApp.webp"
                 alt="Aplicación móvil"
                 className="mx-auto rounded-3xl shadow-2xl"
+                whileHover={{ scale: 1.03 }}
+                transition={{ type: "spring", stiffness: 300, damping: 10 }}
               />
 
               {/* Elementos flotantes decorativos */}
-              <div className="absolute -right-10 top-20 bg-white rounded-xl shadow-xl p-4 w-40 animate-float">
+              <motion.div
+                className="absolute -right-10 top-20 bg-white rounded-xl shadow-xl p-4 w-40"
+                initial={{ opacity: 0, x: 50 }}
+                animate={
+                  isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }
+                }
+                transition={{ delay: 0.6, duration: 0.5 }}
+                whileHover={{ y: -5, scale: 1.05 }}
+              >
                 <div className="flex items-center mb-2">
-                  <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
+                  <div className="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center">
                     <svg
-                      className="w-4 h-4 text-green-600"
+                      className="w-4 h-4 text-teal-600"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -117,16 +260,24 @@ export const MobileAppSection = () => {
                   <p className="text-sm font-bold text-gray-900">$1,250.00</p>
                   <p className="text-xs text-gray-500">Ahora</p>
                 </div>
-              </div>
+              </motion.div>
 
-              <div className="absolute -left-12 bottom-32 bg-white rounded-xl shadow-xl p-4 w-44 animate-float-delay">
+              <motion.div
+                className="absolute -left-12 bottom-32 bg-white rounded-xl shadow-xl p-4 w-44"
+                initial={{ opacity: 0, x: -50 }}
+                animate={
+                  isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }
+                }
+                transition={{ delay: 0.8, duration: 0.5 }}
+                whileHover={{ y: -5, scale: 1.05 }}
+              >
                 <div className="flex items-center justify-between mb-2">
                   <p className="text-xs font-medium text-gray-900">
                     Balance Total
                   </p>
-                  <div className="w-4 h-4 rounded-full bg-green-100 flex items-center justify-center">
+                  <div className="w-4 h-4 rounded-full bg-teal-100 flex items-center justify-center">
                     <svg
-                      className="w-2 h-2 text-green-600"
+                      className="w-2 h-2 text-teal-600"
                       fill="currentColor"
                       viewBox="0 0 20 20"
                     >
@@ -140,7 +291,7 @@ export const MobileAppSection = () => {
                 </div>
                 <p className="text-lg font-bold text-gray-900">$24,156.00</p>
                 <div className="flex items-center mt-1">
-                  <div className="flex items-center text-green-600">
+                  <div className="flex items-center text-teal-600">
                     <svg
                       className="w-3 h-3"
                       fill="currentColor"
@@ -156,9 +307,9 @@ export const MobileAppSection = () => {
                   </div>
                   <p className="text-xs text-gray-500 ml-2">este mes</p>
                 </div>
-              </div>
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
