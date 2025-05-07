@@ -1,9 +1,13 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion, useInView } from "framer-motion";
 import { Target, Award, Heart } from "lucide-react";
+import { useRef } from "react";
 
 export const AboutMission = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.2 });
+
   const values = [
     {
       icon: Target,
@@ -25,29 +29,75 @@ export const AboutMission = () => {
     },
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 15,
+      },
+    },
+  };
+
   return (
     <section className="py-20 bg-white">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="grid md:grid-cols-3 gap-8">
+        <motion.div
+          ref={ref}
+          className="grid md:grid-cols-3 gap-8"
+          variants={containerVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+        >
           {values.map((value, index) => (
             <motion.div
               key={index}
-              className="bg-white rounded-xl border border-gray-100 p-8 shadow-sm hover:shadow-md transition-shadow"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              whileHover={{ y: -10 }}
+              className="bg-white rounded-xl border border-gray-100 p-8 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden"
+              variants={itemVariants}
+              whileHover={{
+                y: -10,
+                boxShadow:
+                  "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+              }}
+              transition={{ type: "spring", stiffness: 300, damping: 15 }}
             >
-              <div className="w-14 h-14 bg-green-100 rounded-lg flex items-center justify-center mb-6">
-                <value.icon className="h-7 w-7 text-green-600" />
+              <motion.div
+                className="absolute -right-10 -bottom-10 w-40 h-40 bg-teal-100 rounded-full opacity-20"
+                initial={{ scale: 0, rotate: -20 }}
+                whileInView={{ scale: 1, rotate: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.2 * index }}
+              ></motion.div>
+
+              <div className="relative z-10">
+                <motion.div
+                  className="w-14 h-14 bg-teal-100 rounded-lg flex items-center justify-center mb-6"
+                  whileHover={{ rotate: 5, scale: 1.05 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                >
+                  <value.icon className="h-7 w-7 text-teal-600" />
+                </motion.div>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">
+                  {value.title}
+                </h3>
+                <p className="text-gray-600">{value.description}</p>
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">
-                {value.title}
-              </h3>
-              <p className="text-gray-600">{value.description}</p>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
