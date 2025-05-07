@@ -227,7 +227,7 @@ export const Hero = () => {
 
       {/* Indicador de scroll */}
       <motion.div
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 md:visible invisible"
         animate={{
           y: [0, 10, 0],
         }}

@@ -1,4 +1,7 @@
-import { Linkedin, Facebook, Instagram, Twitter } from "lucide-react";
+"use client";
+
+import { motion } from "framer-motion";
+import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 
 export const Footer = () => {
   const productLinks = [
@@ -18,9 +21,9 @@ export const Footer = () => {
   const socialLinks = ["facebook", "twitter", "instagram", "linkedin"];
 
   return (
-    <footer className="bg-gray-900 text-gray-300 py-16">
-      <div className="container mx-5 px-4 md:px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
+    <footer className="bg-gray-900 text-gray-300 py-12 md:py-16">
+      <div className="container mx-auto px-6 md:px-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 md:gap-12">
           <div className="lg:col-span-2">
             <div className="flex items-center mb-6">
               <div className="w-10 h-10 flex items-center justify-center mr-3">
@@ -38,69 +41,74 @@ export const Footer = () => {
               Más de 25 años brindando soluciones financieras innovadoras y
               seguras para individuos y empresas en todo el país.
             </p>
-            <div className="flex space-x-4">
-              {socialLinks.map((social) => (
-                <a
-                  key={social}
-                  href={`#${social}`}
-                  className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-green-600 transition-colors"
-                >
-                  <span className="sr-only">{social}</span>
-                  {social === "facebook" && (
-                    <Facebook className="w-5 h-5 text-gray-400" />
-                  )}
-                  {social === "twitter" && (
-                    <Twitter className="w-5 h-5 text-gray-400" />
-                  )}
-                  {social === "instagram" && (
-                    <Instagram className="w-5 h-5 text-gray-400" />
-                  )}
-                  {social === "linkedin" && (
-                    <Linkedin className="w-5 h-5 text-gray-400" />
-                  )}
-                </a>
-              ))}
+            <div className="flex flex-wrap gap-3">
+              {socialLinks.map((social) => {
+                const Icon =
+                  social === "facebook"
+                    ? Facebook
+                    : social === "twitter"
+                    ? Twitter
+                    : social === "instagram"
+                    ? Instagram
+                    : Linkedin;
+
+                return (
+                  <motion.a
+                    key={social}
+                    href={`#${social}`}
+                    className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-green-600 transition-colors"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <span className="sr-only">{social}</span>
+                    <Icon className="w-5 h-5 text-white" />
+                  </motion.a>
+                );
+              })}
             </div>
           </div>
-
-          <div>
+          <div className="mt-2 sm:mt-0">
             <h3 className="text-white font-bold text-lg mb-4">Productos</h3>
             <ul className="space-y-3">
               {productLinks.map((item) => (
                 <li key={item}>
-                  <a
+                  <motion.a
                     href="#"
-                    className="text-gray-400 hover:text-white transition-colors"
+                    className="text-gray-400 hover:text-white transition-colors inline-block"
+                    whileHover={{ x: 5 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 10 }}
                   >
                     {item}
-                  </a>
+                  </motion.a>
                 </li>
               ))}
             </ul>
           </div>
-
-          <div>
+          {/* Enlaces de servicios */}
+          <div className="mt-2 sm:mt-0">
             <h3 className="text-white font-bold text-lg mb-4">Servicios</h3>
             <ul className="space-y-3">
               {serviceLinks.map((item) => (
                 <li key={item}>
-                  <a
+                  <motion.a
                     href="#"
-                    className="text-gray-400 hover:text-white transition-colors"
+                    className="text-gray-400 hover:text-white transition-colors inline-block"
+                    whileHover={{ x: 5 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 10 }}
                   >
                     {item}
-                  </a>
+                  </motion.a>
                 </li>
               ))}
             </ul>
           </div>
-
-          <div>
+          {/* Información de contacto */}
+          <div className="mt-2 sm:mt-0">
             <h3 className="text-white font-bold text-lg mb-4">Contacto</h3>
             <ul className="space-y-3">
               <li className="flex items-start">
                 <svg
-                  className="w-5 h-5 text-gray-400 mr-3 mt-1"
+                  className="w-5 h-5 text-gray-400 mr-3 mt-1 flex-shrink-0"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -118,13 +126,11 @@ export const Footer = () => {
                     d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                   ></path>
                 </svg>
-                <span className="text-gray-400">
-                  Cuba No. 225 esq. O'Reilly, en La Habana Vieja, Cuba
-                </span>
+                <span className="text-gray-400">Av. Principal 123, Ciudad</span>
               </li>
               <li className="flex items-start">
                 <svg
-                  className="w-5 h-5 text-gray-400 mr-3 mt-1"
+                  className="w-5 h-5 text-gray-400 mr-3 mt-1 flex-shrink-0"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -140,7 +146,7 @@ export const Footer = () => {
               </li>
               <li className="flex items-start">
                 <svg
-                  className="w-5 h-5 text-gray-400 mr-3 mt-1"
+                  className="w-5 h-5 text-gray-400 mr-3 mt-1 flex-shrink-0"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -152,7 +158,7 @@ export const Footer = () => {
                     d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                   ></path>
                 </svg>
-                <span className="text-gray-400">
+                <span className="text-gray-400 break-all">
                   contacto@bancometropolitano.com
                 </span>
               </li>
@@ -160,12 +166,12 @@ export const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-sm text-gray-500">
+        <div className="border-t border-gray-800 mt-10 pt-8 flex flex-col md:flex-row justify-between items-center">
+          <p className="text-sm text-gray-500 text-center md:text-left">
             © {new Date().getFullYear()} Banco Metropolitano. Todos los derechos
             reservados.
           </p>
-          <div className="flex space-x-6 mt-4 md:mt-0">
+          <div className="flex flex-wrap justify-center gap-4 mt-4 md:mt-0">
             <a
               href="#"
               className="text-sm text-gray-500 hover:text-white transition-colors"
