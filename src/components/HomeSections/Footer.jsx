@@ -1,3 +1,5 @@
+import { Linkedin, Facebook, Instagram, Twitter } from "lucide-react";
+
 export const Footer = () => {
   const productLinks = [
     "Cuentas",
@@ -44,13 +46,18 @@ export const Footer = () => {
                   className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-green-600 transition-colors"
                 >
                   <span className="sr-only">{social}</span>
-                  <svg
-                    className="w-5 h-5"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M12 2C6.477 2 2 6.477 2 12c0 5.013 3.695 9.72 8.857 10.728.64.116.846-.278.846-.618 0-.304-.011-1.105-.018-2.17-3.477.76-4.21-1.677-4.21-1.677-.569-1.445-1.39-1.83-1.39-1.83-1.132-.773.087-.758.087-.758 1.253.088 1.912 1.287 1.912 1.287 1.115 1.908 2.927 1.356 3.635 1.037.114-.806.435-1.356.79-1.668-2.775-.316-5.695-1.39-5.695-6.185 0-1.366.488-2.484 1.286-3.36-.127-.315-.558-1.582.123-3.3 0 0 1.047-.336 3.43 1.278a11.93 11.93 0 0 1 3.09-.416c1.053.005 2.107.141 3.09.416 2.373-1.614 3.42-1.278 3.42-1.278.683 1.718.254 2.985.124 3.3.8.876 1.286 1.994 1.286 3.36 0 4.805-2.925 5.865-5.715 6.175.448.386.848 1.15.848 2.316 0 1.67-.015 3.018-.015 3.425 0 .344.204.742.85.617C18.312 21.714 22 17.01 22 12c0-5.523-4.477-10-10-10z" />
-                  </svg>
+                  {social === "facebook" && (
+                    <Facebook className="w-5 h-5 text-gray-400" />
+                  )}
+                  {social === "twitter" && (
+                    <Twitter className="w-5 h-5 text-gray-400" />
+                  )}
+                  {social === "instagram" && (
+                    <Instagram className="w-5 h-5 text-gray-400" />
+                  )}
+                  {social === "linkedin" && (
+                    <Linkedin className="w-5 h-5 text-gray-400" />
+                  )}
                 </a>
               ))}
             </div>

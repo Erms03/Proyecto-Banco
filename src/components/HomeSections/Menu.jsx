@@ -47,10 +47,10 @@ export const Menu = ({ isOpen, isAuthenticated, authenticatedUser }) => {
             <a href="/services">Servicios</a>
           </li>
           <li>
-            <a href="/about">Nosotros</a>
+            <Link to={"/about"}>Nosotros</Link>
           </li>
           <li>
-            <a href="/contact">Contacto</a>
+            <Link to={"/contact"}>Contacto</Link>
           </li>
         </ul>
       </div>

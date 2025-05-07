@@ -16,13 +16,13 @@ export const Nav = () => {
         Servicios
       </Link>
       <Link
-        to="/nosotros"
+        to="/about"
         className="text-gray-800 hover:text-green-600 font-medium transition-colors"
       >
         Nosotros
       </Link>
       <Link
-        to="/contacto"
+        to="/contact"
         className="text-gray-800 hover:text-green-600 font-medium transition-colors"
       >
         Contacto
