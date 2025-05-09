@@ -1,4 +1,3 @@
-"use client";
 
 import { motion } from "framer-motion";
 import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";

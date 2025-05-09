@@ -1,18 +1,14 @@
 import { useState } from "react";
-import { useNavigate } from "react-router";
 
 export const useNotification = () => {
-  const [notification, setNotification] = useState(false);
-  const navigate = useNavigate();
+  const [notification, setNotification] = useState(null);
 
-  const startNotification = ({ path }) => {
-    setNotification(true);
+  const startNotification = ({ message, error, path }) => {
+    setNotification({ message, error, path });
+
     setTimeout(() => {
-      setNotification(false);
-      if (path) {
-        navigate(path);
-      }
-    }, 2000);
+      setNotification(null);
+    }, 3500);
   };
 
   return { notification, startNotification };

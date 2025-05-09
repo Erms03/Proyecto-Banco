@@ -10,6 +10,12 @@ export const Notification = ({ message, error, path }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Asegurarse de que la notificación sea visible inicialmente
+    setIsVisible(true);
+    setIsExiting(false);
+
+    console.log("Hola"  );
+
     const timer = setTimeout(() => {
       setIsExiting(true);
 
@@ -20,7 +26,7 @@ export const Notification = ({ message, error, path }) => {
     }, 3000);
 
     return () => clearTimeout(timer);
-  }, [navigate, path]);
+  }, [navigate, path, message, error]);
 
   const handleClose = () => {
     setIsExiting(true);
@@ -28,8 +34,6 @@ export const Notification = ({ message, error, path }) => {
       setIsVisible(false);
     }, 500);
   };
-
-  if (!isVisible) return null;
 
   return (
     <div

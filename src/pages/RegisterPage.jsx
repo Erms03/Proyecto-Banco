@@ -1,18 +1,16 @@
-"use client";
-
 import { useState, useEffect } from "react";
 import { Notification } from "../components/Notification";
-import { useNotification } from "../hooks/useNotification";
 import { AuthLayout } from "../components/AuthSections/AuthLayout";
 import { RegisterForm } from "../components/AuthSections/RegisterForm";
 import {
   RegisterSideContent,
   RegisterSideFeatures,
 } from "../components/AuthSections/AuthSideContent";
+import { useNotification } from "../hooks/useNotification";
 
 export const RegisterPage = () => {
-  const { notification } = useNotification();
   const [animateForm, setAnimateForm] = useState(false);
+  const { notification, startNotification } = useNotification();
 
   useEffect(() => {
     // Animar la entrada del formulario
@@ -35,7 +33,7 @@ export const RegisterPage = () => {
         sideDescription="Crea tu cuenta y comienza a disfrutar de todos nuestros servicios financieros"
         sideFeatures={<RegisterSideFeatures />}
       >
-        <RegisterForm />
+        <RegisterForm startNotification={startNotification} />
       </AuthLayout>
     </>
   );

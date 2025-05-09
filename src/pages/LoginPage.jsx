@@ -2,18 +2,17 @@
 
 import { useState, useEffect } from "react";
 import { Notification } from "../components/Notification";
-import { useNotification } from "../hooks/useNotification";
 import { AuthLayout } from "../components/AuthSections/AuthLayout";
 import { LoginForm } from "../components/AuthSections/LoginForm";
 import {
   LoginSideContent,
   LoginSideFeatures,
 } from "../components/AuthSections/AuthSideContent";
+import { useNotification } from "../hooks/useNotification";
 
 export const LoginPage = () => {
-  const { notification } = useNotification();
-  const [error, setError] = useState("");
   const [animateForm, setAnimateForm] = useState(false);
+  const { notification, startNotification } = useNotification();
 
   useEffect(() => {
     // Animar la entrada del formulario
@@ -26,8 +25,9 @@ export const LoginPage = () => {
     <>
       {notification && (
         <Notification
-          message={"Ha iniciado sesión correctamente"}
-          error={error}
+          message={notification.message}
+          error={notification.error}
+          path={notification.path}
         />
       )}
 
@@ -39,7 +39,7 @@ export const LoginPage = () => {
         sideDescription="Accede a tu cuenta para gestionar tus finanzas de manera segura y eficiente"
         sideFeatures={<LoginSideFeatures />}
       >
-        <LoginForm />
+        <LoginForm startNotification={startNotification} />
       </AuthLayout>
     </>
   );

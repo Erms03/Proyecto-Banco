@@ -1,4 +1,3 @@
-"use client";
 
 import { Link } from "react-router";
 import { motion, useInView } from "framer-motion";
@@ -159,19 +158,19 @@ export const MobileAppSection = () => {
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: "spring", stiffness: 400, damping: 10 }}
               >
-                <Link
-                  to="#"
-                  className="flex items-center bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors"
+                <a
+                  href="https://www.apklis.cu/application/cu.etecsa.cubacel.tr.tm"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center text-white bg-black px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors shadow-2xl w-40 justify-center"
                 >
-                  <svg
-                    className="w-7 h-7 mr-2"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 8.42 7.31c1.33.07 2.25.7 3.01.72.96-.04 2.03-.8 3.02-.77 3.56.3 5.23 3.68 5.23 3.68-3.25 1.57-2.72 5.3.37 6.75-.92 1.65-2.13 3.29-3 3.59zm-3.2-15.5c.83-1.17.89-2.24.66-3.28-1.25.13-2.68.9-3.42 1.97-.66.94-1.1 2.22-.9 3.37 1.19.05 2.47-.59 3.66-2.06z" />
-                  </svg>
-                  App Store
-                </Link>
+                  <img
+                    src="/Apklis.png"
+                    alt="Apkalis logo"
+                    className="w-6 h-6 mr-2"
+                  />
+                  Apklis
+                </a>
               </motion.div>
               <motion.div
                 variants={itemVariants}
@@ -179,19 +178,19 @@ export const MobileAppSection = () => {
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: "spring", stiffness: 400, damping: 10 }}
               >
-                <Link
-                  to="#"
-                  className="flex items-center bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors"
+                <a
+                  href="https://t.me/TransfermovilCuba"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center bg-black text-white shadow-2xl px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors w-40 justify-center cursor-pointer"
                 >
-                  <svg
-                    className="w-6 h-6 mr-2"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 5.371l2.97-1.715 7.995 4.63c.825.478 1.1 1.377.594 2.123-.044.063-.094.124-.148.182l-8.233 4.811-3.073-1.75L24 12l-9.5-4.815z" />
-                  </svg>
-                  Google Play
-                </Link>
+                  <img
+                    src="/Telegram-Logo.png"
+                    alt="Telegram Logo"
+                    className="h-6 w-6 mr-2"
+                  />
+                  Telegram
+                </a>
               </motion.div>
             </motion.div>
           </motion.div>

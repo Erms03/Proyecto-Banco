@@ -1,21 +1,21 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { motion } from "framer-motion";
 import { User, Mail } from "lucide-react";
 import { PasswordInput } from "../PasswordInput";
 import { useRegister } from "../../hooks/useRegister";
 import { useUpdateRegisterForm } from "../../hooks/useUpdateRegisterForm";
-import { useNotification } from "../../hooks/useNotification";
+import { RegisterSideFeatures } from "./AuthSideContent";
 
-export const RegisterForm = () => {
+export const RegisterForm = ({ startNotification }) => {
   const { dataForm, updateForm, cleanRegisterForm } = useUpdateRegisterForm();
   const { createUser } = useRegister();
-  const { startNotification } = useNotification();
   const [isLoading, setIsLoading] = useState(false);
   const [passwordMatch, setPasswordMatch] = useState(true);
   const [passwordStrength, setPasswordStrength] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Verificar si las contraseñas coinciden
@@ -42,6 +42,7 @@ export const RegisterForm = () => {
     }
   }, [dataForm.password, dataForm.confirmPassword]);
 
+  // Modificar la función handleSubmit para asegurar que las notificaciones funcionen correctamente
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -54,9 +55,16 @@ export const RegisterForm = () => {
     // Simular un tiempo de carga
     setTimeout(() => {
       createUser({ dataForm });
-      startNotification({ path: "/login" });
+      startNotification({
+        message: "Se ha registrado correctamente. Ahora puede iniciar sesión.",
+        path: "/login",
+      });
       cleanRegisterForm();
       setIsLoading(false);
+      // Usar setTimeout para asegurar que la notificación se muestre antes de la navegación
+      setTimeout(() => {
+        navigate("/login");
+      }, 1000);
     }, 800);
   };
 
@@ -295,6 +303,11 @@ export const RegisterForm = () => {
           </Link>
         </motion.p>
       </form>
+
+      {/* Añadimos las características en el lado del formulario para dispositivos móviles */}
+      <div className="mt-10 lg:hidden">
+        <RegisterSideFeatures />
+      </div>
     </motion.div>
   );
 };

@@ -1,4 +1,3 @@
-"use client";
 
 import { BarChart3, CreditCard, Shield, Users } from "lucide-react";
 import { ServiceCard } from "./ServicesCard";

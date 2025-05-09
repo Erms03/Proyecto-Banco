@@ -1,4 +1,3 @@
-"use client";
 
 import { motion, useInView } from "framer-motion";
 import { Award, Shield, Users, TrendingUp } from "lucide-react";

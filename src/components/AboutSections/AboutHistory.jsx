@@ -1,5 +1,3 @@
-"use client";
-
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { useRef } from "react";
 
@@ -45,6 +43,7 @@ export const AboutHistory = () => {
       description:
         "Banco Metropolitano fue fundado con la visión de crear una institución financiera que combinara la solidez tradicional con un enfoque innovador. Desde el primer día, nos comprometimos a ofrecer servicios financieros accesibles y de calidad para todos los sectores de la población.",
       imagePosition: "left",
+      imagen: "/Fundacion.jpg",
     },
     {
       year: "2005",
@@ -52,6 +51,7 @@ export const AboutHistory = () => {
       description:
         "Tras consolidar nuestra presencia en la capital, iniciamos un ambicioso plan de expansión nacional, abriendo sucursales en las principales ciudades del país. Esta etapa marcó el comienzo de nuestra transformación en una entidad financiera de referencia a nivel nacional.",
       imagePosition: "right",
+      imagen: "/Expansion.jpeg",
     },
     {
       year: "2015",
@@ -59,6 +59,7 @@ export const AboutHistory = () => {
       description:
         "Reconociendo la importancia de la tecnología en el sector financiero, iniciamos un profundo proceso de transformación digital. Lanzamos nuestra primera aplicación móvil y renovamos completamente nuestros sistemas para ofrecer una experiencia bancaria más ágil, segura y accesible.",
       imagePosition: "left",
+      imagen: "/Transformacion.jpeg",
     },
     {
       year: "Actualidad",
@@ -66,6 +67,7 @@ export const AboutHistory = () => {
       description:
         "Hoy, Banco Metropolitano se posiciona como una entidad financiera líder en innovación y servicio al cliente. Continuamos desarrollando soluciones financieras que se adaptan a las necesidades cambiantes de nuestros clientes, manteniendo siempre nuestro compromiso con la excelencia, la seguridad y la responsabilidad social.",
       imagePosition: "right",
+      imagen: "/Innovacion.webp",
     },
   ];
 
@@ -203,7 +205,7 @@ export const AboutHistory = () => {
                       }}
                     ></motion.div>
                     <img
-                      src="/placeholder.svg?height=300&width=400"
+                      src={event.imagen}
                       alt={`${event.title}`}
                       className="rounded-xl relative z-10 w-full h-auto shadow-lg"
                     />

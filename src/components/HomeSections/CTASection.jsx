@@ -1,5 +1,3 @@
-"use client";
-
 import { Link } from "react-router";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
@@ -97,7 +95,7 @@ export const CTASection = () => {
               transition={{ type: "spring", stiffness: 400, damping: 10 }}
             >
               <Link
-                to="/contacto"
+                to="/contact"
                 className="inline-flex items-center justify-center px-8 py-4 bg-transparent text-white font-medium rounded-lg border border-white/30 transition-all hover:bg-white/10 hover:shadow-lg text-lg"
               >
                 Contactar un asesor

@@ -1,4 +1,3 @@
-"use client";
 
 import { motion, useInView } from "framer-motion";
 import { MessageCircle, Phone, ArrowRight } from "lucide-react";

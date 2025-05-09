@@ -1,5 +1,3 @@
-"use client";
-
 import { motion, useInView } from "framer-motion";
 import { Linkedin, Twitter } from "lucide-react";
 import { useRef } from "react";
@@ -13,25 +11,25 @@ export const AboutTeam = () => {
       name: "Carlos Rodríguez",
       position: "Director General",
       bio: "Con más de 25 años de experiencia en el sector financiero, Carlos ha liderado la transformación de Banco Metropolitano hacia la era digital.",
-      image: "/placeholder.svg?height=300&width=300",
+      image: "/Carlos Rodriguez.jpg",
     },
     {
       name: "María González",
       position: "Directora de Operaciones",
       bio: "Especialista en optimización de procesos bancarios, María ha implementado sistemas que han mejorado significativamente la eficiencia operativa del banco.",
-      image: "/placeholder.svg?height=300&width=300",
+      image: "/Maria Gonzales.jpg",
     },
     {
       name: "Javier Martínez",
       position: "Director de Tecnología",
       bio: "Pionero en la implementación de soluciones fintech, Javier ha sido clave en la transformación digital de nuestros servicios bancarios.",
-      image: "/placeholder.svg?height=300&width=300",
+      image: "/Javier Martin.jpg",
     },
     {
       name: "Laura Sánchez",
       position: "Directora de Experiencia al Cliente",
       bio: "Con un enfoque centrado en el cliente, Laura ha revolucionado la forma en que interactuamos con nuestros usuarios, mejorando significativamente la satisfacción.",
-      image: "/placeholder.svg?height=300&width=300",
+      image: "/Laura Sanchez.jpg",
     },
   ];
 

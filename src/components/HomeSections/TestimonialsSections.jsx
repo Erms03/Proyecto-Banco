@@ -1,5 +1,3 @@
-"use client";
-
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
@@ -9,19 +7,19 @@ export const TestimonialsSection = () => {
 
   const testimonials = [
     {
-      name: "María González",
+      name: "Lia Lopez",
       role: "Emprendedora",
       quote:
         "El apoyo financiero y la asesoría que recibí de Banco Metropolitano fueron fundamentales para hacer crecer mi negocio. Su plataforma digital me permite gestionar todo sin complicaciones.",
     },
     {
-      name: "Carlos Rodríguez",
+      name: "Erdwin Martinez",
       role: "Profesional",
       quote:
         "Llevo más de 10 años como cliente y la evolución digital del banco ha sido impresionante. La app móvil me permite hacer todo lo que necesito sin visitar una sucursal.",
     },
     {
-      name: "Laura Martínez",
+      name: "Melissa Luzardo",
       role: "Estudiante universitaria",
       quote:
         "Abrí mi primera cuenta con ellos y el proceso fue muy sencillo. Las herramientas de control de gastos me ayudan a administrar mejor mi presupuesto mensual.",

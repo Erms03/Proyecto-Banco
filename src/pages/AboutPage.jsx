@@ -10,7 +10,7 @@ import { CTASection } from "../components/HomeSections/CTASection";
 
 export const AboutPage = () => {
   return (
-    <div className="overflow-x-hidden bg-white">
+    <div className="overflow-x-hidden bg-white h-screen">
       <Header />
       <AboutHero />
       <AboutMission />

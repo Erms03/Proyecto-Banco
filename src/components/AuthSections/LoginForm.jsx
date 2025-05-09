@@ -7,22 +7,20 @@ import { Mail } from "lucide-react";
 import { PasswordInput } from "../PasswordInput";
 import { useRegister } from "../../hooks/useRegister";
 import { useAuth } from "../../context/AuthContext";
-import { useNotification } from "../../hooks/useNotification";
 import { useUpdateRegisterForm } from "../../hooks/useUpdateRegisterForm";
+import { LoginSideFeatures } from "./AuthSideContent";
 
-export const LoginForm = () => {
+export const LoginForm = ({ startNotification }) => {
   const { dataForm, updateForm } = useUpdateRegisterForm();
   const { users } = useRegister();
   const { login } = useAuth();
-  const { startNotification } = useNotification();
-  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
+  // Modificar la función handleSubmit para asegurar que las notificaciones funcionen correctamente
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
-    setError("");
 
     // Simular un tiempo de carga
     setTimeout(() => {
@@ -33,10 +31,19 @@ export const LoginForm = () => {
 
       if (user) {
         login(user);
-        startNotification({ path: "/home" });
+        startNotification({
+          message: "Ha iniciado sesión correctamente",
+          path: "/profile",
+        });
+        // Usar setTimeout para asegurar que la notificación se muestre antes de la navegación
+        setTimeout(() => {
+          navigate("/profile");
+        }, 1000);
       } else {
-        setError("Credenciales incorrectas. Por favor, inténtalo de nuevo.");
-        startNotification({ path: null });
+        startNotification({
+          error: "Credenciales incorrectas. Por favor, inténtalo de nuevo.",
+          path: null,
+        });
       }
       setIsLoading(false);
     }, 800);
@@ -200,6 +207,11 @@ export const LoginForm = () => {
           </Link>
         </motion.p>
       </form>
+
+      {/* Añadimos las características en el lado del formulario para dispositivos móviles */}
+      <div className="mt-10 lg:hidden">
+        <LoginSideFeatures />
+      </div>
     </motion.div>
   );
 };

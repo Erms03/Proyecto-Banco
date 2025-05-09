@@ -7,7 +7,7 @@ import { ContactCTA } from "../components/ContactSections/ContactCTA";
 
 export const ContactPage = () => {
   return (
-    <div className="overflow-x-hidden bg-white">
+    <div className="overflow-x-hidden bg-white h-screen">
       <Header />
       <ContactHero />
       <ContactForm />

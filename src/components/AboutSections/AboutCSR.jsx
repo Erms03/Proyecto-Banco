@@ -1,4 +1,3 @@
-"use client";
 
 import { motion, useInView } from "framer-motion";
 import { Heart, Leaf, BookOpen, Home } from "lucide-react";
