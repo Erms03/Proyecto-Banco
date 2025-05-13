@@ -1,10 +1,9 @@
-
 import { ChevronRight } from "lucide-react";
 import { Link } from "react-router";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
-export const Hero = () => {
+export const HomeHero = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({

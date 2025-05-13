@@ -4,7 +4,7 @@ export const Nav = () => {
   return (
     <nav className="flex items-center space-x-8 mr-30">
       <Link
-        to="/"
+        to="/home"
         className="text-gray-800 hover:text-green-600 font-medium transition-colors"
       >
         Inicio

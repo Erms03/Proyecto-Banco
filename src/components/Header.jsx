@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Nav } from "./Nav";
+import { Nav } from "./HomeSections/Nav";
 import { Link, useNavigate } from "react-router";
 import { useAuth } from "/home/erdwin/Estudio/Proyecto-Banco/src/context/AuthContext.jsx";
 import {

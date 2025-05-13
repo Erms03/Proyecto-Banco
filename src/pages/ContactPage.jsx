@@ -1,5 +1,5 @@
-import { Header } from "../components/HomeSections/Header";
-import { Footer } from "../components/HomeSections/Footer";
+import { Header } from "../components/Header";
+import { Footer } from "../components/Footer";
 import { ContactHero } from "../components/ContactSections/ContactHero";
 import { ContactForm } from "../components/ContactSections/ContactForm";
 import { ContactFAQ } from "../components/ContactSections/ContactFAQ";

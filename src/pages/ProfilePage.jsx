@@ -1,104 +1,49 @@
 "use client";
 
 import { useState } from "react";
-import { Header } from "../components/HomeSections/Header";
-import { Footer } from "../components/HomeSections/Footer";
+import { Header } from "../components/Header";
+import { Footer } from "../components/Footer";
 import { useAuth } from "../context/AuthContext";
 import { motion } from "framer-motion";
-import {
-  User,
-  CreditCard,
-  Shield,
-  Bell,
-  Settings,
-  ChevronRight,
-  Edit,
-  Eye,
-  EyeOff,
-  Download,
-  ArrowUpRight,
-  ArrowDownRight,
-  Calendar,
-  Clock,
-} from "lucide-react";
+import { User, Shield, Edit, Save, X } from "lucide-react";
 import { Link } from "react-router";
+import { Notification } from "../components/Notification";
+import { useNotification } from "../hooks/useNotification";
 
 export const ProfilePage = () => {
   const { authenticatedUser } = useAuth();
-  const [activeTab, setActiveTab] = useState("overview");
-  const [showAccountNumber, setShowAccountNumber] = useState(false);
+  const { notification, startNotification } = useNotification();
+  const [activeTab, setActiveTab] = useState("personal");
+  const [isEditing, setIsEditing] = useState(false);
 
-  // Datos simulados para la cuenta bancaria
-  const accountData = {
-    accountNumber: "****-****-****-5678",
-    fullAccountNumber: "1234-5678-9012-5678",
-    balance: 12458.75,
-    currency: "USD",
-    type: "Cuenta Corriente",
-    status: "Activa",
-    lastAccess: "Hoy, 10:45 AM",
-    transactions: [
-      {
-        id: 1,
-        description: "Depósito de nómina",
-        amount: 2500.0,
-        type: "credit",
-        date: "2023-05-08",
-        time: "09:30",
-      },
-      {
-        id: 2,
-        description: "Pago de factura eléctrica",
-        amount: -120.5,
-        type: "debit",
-        date: "2023-05-07",
-        time: "14:15",
-      },
-      {
-        id: 3,
-        description: "Transferencia recibida",
-        amount: 350.0,
-        type: "credit",
-        date: "2023-05-05",
-        time: "11:20",
-      },
-      {
-        id: 4,
-        description: "Compra en supermercado",
-        amount: -85.75,
-        type: "debit",
-        date: "2023-05-04",
-        time: "18:45",
-      },
-      {
-        id: 5,
-        description: "Retiro en cajero",
-        amount: -200.0,
-        type: "debit",
-        date: "2023-05-02",
-        time: "13:10",
-      },
-    ],
-    cards: [
-      {
-        id: 1,
-        type: "Débito",
-        number: "****-****-****-1234",
-        expiry: "05/26",
-        status: "Activa",
-      },
-      {
-        id: 2,
-        type: "Crédito",
-        number: "****-****-****-5678",
-        expiry: "08/25",
-        status: "Activa",
-      },
-    ],
-    savingsGoals: [
-      { id: 1, name: "Vacaciones", target: 5000, current: 2500, progress: 50 },
-      { id: 2, name: "Nuevo auto", target: 15000, current: 3750, progress: 25 },
-    ],
+  // Estado para los datos del formulario
+  const [formData, setFormData] = useState({
+    name: authenticatedUser.name,
+    email: authenticatedUser.email,
+    phone: "+53 54942132",
+    birthdate: "15/08/1985",
+    address: "Calle Principal #123, La Habana",
+    documentId: "85081512345",
+    emailNotifications: true,
+    smsNotifications: true,
+    marketingNotifications: false,
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData({
+      ...formData,
+      [name]: type === "checkbox" ? checked : value,
+    });
+  };
+
+  const handleSaveChanges = () => {
+    // Aquí iría la lógica para guardar los cambios en el servidor
+    setIsEditing(false);
+    startNotification({
+      message: "Datos actualizados correctamente",
+      path: null,
+    });
   };
 
   const containerVariants = {
@@ -124,239 +69,8 @@ export const ProfilePage = () => {
     },
   };
 
-  const formatCurrency = (amount) => {
-    return new Intl.NumberFormat("es-ES", {
-      style: "currency",
-      currency: "USD",
-    }).format(amount);
-  };
-
   const renderTabContent = () => {
     switch (activeTab) {
-      case "overview":
-        return (
-          <motion.div
-            className="space-y-8"
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-          >
-            {/* Resumen de cuenta */}
-            <motion.div
-              className="bg-white rounded-xl shadow-sm border border-gray-100 p-6"
-              variants={itemVariants}
-            >
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-semibold text-gray-900">
-                  Resumen de Cuenta
-                </h3>
-                <Link
-                  to="/accounts"
-                  className="text-sm text-green-600 hover:text-green-700 flex items-center"
-                >
-                  Ver todas <ChevronRight className="w-4 h-4 ml-1" />
-                </Link>
-              </div>
-
-              <div className="flex flex-col md:flex-row gap-6">
-                <div className="flex-1 bg-gradient-to-br from-teal-500 to-green-600 rounded-lg p-5 text-white">
-                  <div className="flex justify-between items-start mb-4">
-                    <div>
-                      <p className="text-sm text-white/80">Saldo disponible</p>
-                      <h4 className="text-2xl font-bold">
-                        {formatCurrency(accountData.balance)}
-                      </h4>
-                    </div>
-                    <div className="bg-white/20 rounded-full p-2">
-                      <CreditCard className="w-5 h-5" />
-                    </div>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <p className="text-xs text-white/80 mb-1">
-                        Número de cuenta
-                      </p>
-                      <div className="flex items-center">
-                        <p className="text-sm font-medium">
-                          {showAccountNumber
-                            ? accountData.fullAccountNumber
-                            : accountData.accountNumber}
-                        </p>
-                        <button
-                          onClick={() =>
-                            setShowAccountNumber(!showAccountNumber)
-                          }
-                          className="ml-2 text-white/80 hover:text-white"
-                        >
-                          {showAccountNumber ? (
-                            <EyeOff className="w-4 h-4" />
-                          ) : (
-                            <Eye className="w-4 h-4" />
-                          )}
-                        </button>
-                      </div>
-                    </div>
-                    <div>
-                      <p className="text-xs text-white/80 mb-1">Tipo</p>
-                      <p className="text-sm font-medium">{accountData.type}</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex-1 bg-gray-50 rounded-lg p-5">
-                  <h4 className="text-sm font-medium text-gray-700 mb-4">
-                    Actividad reciente
-                  </h4>
-                  <div className="space-y-3">
-                    {accountData.transactions.slice(0, 3).map((transaction) => (
-                      <div
-                        key={transaction.id}
-                        className="flex items-center justify-between"
-                      >
-                        <div className="flex items-center">
-                          <div
-                            className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                              transaction.type === "credit"
-                                ? "bg-green-100 text-green-600"
-                                : "bg-red-100 text-red-600"
-                            }`}
-                          >
-                            {transaction.type === "credit" ? (
-                              <ArrowDownRight className="w-4 h-4" />
-                            ) : (
-                              <ArrowUpRight className="w-4 h-4" />
-                            )}
-                          </div>
-                          <div className="ml-3">
-                            <p className="text-sm font-medium text-gray-900">
-                              {transaction.description}
-                            </p>
-                            <div className="flex items-center text-xs text-gray-500">
-                              <Calendar className="w-3 h-3 mr-1" />
-                              {transaction.date}
-                              <Clock className="w-3 h-3 ml-2 mr-1" />
-                              {transaction.time}
-                            </div>
-                          </div>
-                        </div>
-                        <p
-                          className={`font-medium ${
-                            transaction.type === "credit"
-                              ? "text-green-600"
-                              : "text-red-600"
-                          }`}
-                        >
-                          {transaction.type === "credit" ? "+" : "-"}
-                          {formatCurrency(Math.abs(transaction.amount))}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mt-4 pt-3 border-t border-gray-200">
-                    <Link
-                      to="/transactions"
-                      className="text-sm text-green-600 hover:text-green-700 flex items-center justify-center"
-                    >
-                      Ver todas las transacciones{" "}
-                      <ChevronRight className="w-4 h-4 ml-1" />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Tarjetas */}
-            <motion.div
-              className="bg-white rounded-xl shadow-sm border border-gray-100 p-6"
-              variants={itemVariants}
-            >
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-semibold text-gray-900">
-                  Mis Tarjetas
-                </h3>
-                <Link
-                  to="/cards"
-                  className="text-sm text-green-600 hover:text-green-700 flex items-center"
-                >
-                  Administrar <ChevronRight className="w-4 h-4 ml-1" />
-                </Link>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {accountData.cards.map((card) => (
-                  <div
-                    key={card.id}
-                    className="bg-gray-50 rounded-lg p-4 flex items-center justify-between"
-                  >
-                    <div className="flex items-center">
-                      <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
-                        <CreditCard className="w-5 h-5 text-gray-600" />
-                      </div>
-                      <div className="ml-3">
-                        <p className="text-sm font-medium text-gray-900">
-                          Tarjeta de {card.type}
-                        </p>
-                        <p className="text-xs text-gray-500">
-                          {card.number} • Exp: {card.expiry}
-                        </p>
-                      </div>
-                    </div>
-                    <span
-                      className={`px-2 py-1 text-xs rounded-full ${
-                        card.status === "Activa"
-                          ? "bg-green-100 text-green-700"
-                          : "bg-gray-100 text-gray-700"
-                      }`}
-                    >
-                      {card.status}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-
-            {/* Metas de ahorro */}
-            <motion.div
-              className="bg-white rounded-xl shadow-sm border border-gray-100 p-6"
-              variants={itemVariants}
-            >
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-semibold text-gray-900">
-                  Metas de Ahorro
-                </h3>
-                <Link
-                  to="/savings"
-                  className="text-sm text-green-600 hover:text-green-700 flex items-center"
-                >
-                  Crear nueva meta <ChevronRight className="w-4 h-4 ml-1" />
-                </Link>
-              </div>
-
-              <div className="space-y-4">
-                {accountData.savingsGoals.map((goal) => (
-                  <div key={goal.id} className="bg-gray-50 rounded-lg p-4">
-                    <div className="flex justify-between items-center mb-2">
-                      <h4 className="font-medium text-gray-900">{goal.name}</h4>
-                      <p className="text-sm font-medium">
-                        {formatCurrency(goal.current)} /{" "}
-                        {formatCurrency(goal.target)}
-                      </p>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2.5">
-                      <div
-                        className="bg-green-600 h-2.5 rounded-full"
-                        style={{ width: `${goal.progress}%` }}
-                      ></div>
-                    </div>
-                    <p className="text-xs text-gray-500 mt-2">
-                      {goal.progress}% completado
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          </motion.div>
-        );
       case "personal":
         return (
           <motion.div
@@ -369,26 +83,76 @@ export const ProfilePage = () => {
               <h3 className="text-lg font-semibold text-gray-900">
                 Información Personal
               </h3>
-              <button className="text-sm text-green-600 hover:text-green-700 flex items-center">
-                <Edit className="w-4 h-4 mr-1" /> Editar
-              </button>
+              {isEditing ? (
+                <div className="flex space-x-2">
+                  <button
+                    onClick={handleSaveChanges}
+                    className="flex items-center text-sm text-white bg-green-600 hover:bg-green-700 px-3 py-1.5 rounded-lg transition-colors"
+                  >
+                    <Save className="w-4 h-4 mr-1" /> Guardar
+                  </button>
+                  <button
+                    onClick={() => setIsEditing(false)}
+                    className="flex items-center text-sm text-gray-600 hover:text-gray-700 bg-gray-100 hover:bg-gray-200 px-3 py-1.5 rounded-lg transition-colors"
+                  >
+                    <X className="w-4 h-4 mr-1" /> Cancelar
+                  </button>
+                </div>
+              ) : (
+                <button
+                  onClick={() => setIsEditing(true)}
+                  className="flex items-center text-sm text-green-600 hover:text-green-700"
+                >
+                  <Edit className="w-4 h-4 mr-1" /> Editar
+                </button>
+              )}
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <motion.div className="space-y-4" variants={itemVariants}>
                 <div>
                   <p className="text-sm text-gray-500 mb-1">Nombre completo</p>
-                  <p className="font-medium">{authenticatedUser.name}</p>
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                    />
+                  ) : (
+                    <p className="font-medium">{formData.name}</p>
+                  )}
                 </div>
                 <div>
                   <p className="text-sm text-gray-500 mb-1">
                     Correo electrónico
                   </p>
-                  <p className="font-medium">{authenticatedUser.email}</p>
+                  {isEditing ? (
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                    />
+                  ) : (
+                    <p className="font-medium">{formData.email}</p>
+                  )}
                 </div>
                 <div>
                   <p className="text-sm text-gray-500 mb-1">Teléfono</p>
-                  <p className="font-medium">+53 54942132</p>
+                  {isEditing ? (
+                    <input
+                      type="tel"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                    />
+                  ) : (
+                    <p className="font-medium">{formData.phone}</p>
+                  )}
                 </div>
               </motion.div>
 
@@ -397,17 +161,47 @@ export const ProfilePage = () => {
                   <p className="text-sm text-gray-500 mb-1">
                     Fecha de nacimiento
                   </p>
-                  <p className="font-medium">15/08/1985</p>
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      name="birthdate"
+                      value={formData.birthdate}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                    />
+                  ) : (
+                    <p className="font-medium">{formData.birthdate}</p>
+                  )}
                 </div>
                 <div>
                   <p className="text-sm text-gray-500 mb-1">Dirección</p>
-                  <p className="font-medium">Calle Principal #123, La Habana</p>
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      name="address"
+                      value={formData.address}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                    />
+                  ) : (
+                    <p className="font-medium">{formData.address}</p>
+                  )}
                 </div>
                 <div>
                   <p className="text-sm text-gray-500 mb-1">
                     Documento de identidad
                   </p>
-                  <p className="font-medium">85081512345</p>
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      name="documentId"
+                      value={formData.documentId}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                    />
+                  ) : (
+                    <p className="font-medium">{formData.documentId}</p>
+                  )}
                 </div>
               </motion.div>
             </div>
@@ -420,12 +214,15 @@ export const ProfilePage = () => {
                 <div className="flex items-center">
                   <input
                     type="checkbox"
-                    id="email-notifications"
+                    id="emailNotifications"
+                    name="emailNotifications"
+                    checked={formData.emailNotifications}
+                    onChange={handleInputChange}
+                    disabled={!isEditing}
                     className="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
-                    defaultChecked
                   />
                   <label
-                    htmlFor="email-notifications"
+                    htmlFor="emailNotifications"
                     className="ml-2 text-sm text-gray-700"
                   >
                     Recibir notificaciones por correo electrónico
@@ -434,12 +231,15 @@ export const ProfilePage = () => {
                 <div className="flex items-center">
                   <input
                     type="checkbox"
-                    id="sms-notifications"
+                    id="smsNotifications"
+                    name="smsNotifications"
+                    checked={formData.smsNotifications}
+                    onChange={handleInputChange}
+                    disabled={!isEditing}
                     className="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
-                    defaultChecked
                   />
                   <label
-                    htmlFor="sms-notifications"
+                    htmlFor="smsNotifications"
                     className="ml-2 text-sm text-gray-700"
                   >
                     Recibir notificaciones por SMS
@@ -448,11 +248,15 @@ export const ProfilePage = () => {
                 <div className="flex items-center">
                   <input
                     type="checkbox"
-                    id="marketing-notifications"
+                    id="marketingNotifications"
+                    name="marketingNotifications"
+                    checked={formData.marketingNotifications}
+                    onChange={handleInputChange}
+                    disabled={!isEditing}
                     className="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
                   />
                   <label
-                    htmlFor="marketing-notifications"
+                    htmlFor="marketingNotifications"
                     className="ml-2 text-sm text-gray-700"
                   >
                     Recibir ofertas y promociones
@@ -493,34 +297,45 @@ export const ProfilePage = () => {
                       </p>
                     </div>
                   </div>
-                  <button className="text-green-600 hover:text-green-700">
-                    <ChevronRight className="w-5 h-5" />
-                  </button>
+                  <Link
+                    to="/change-password"
+                    className="px-3 py-1.5 bg-green-600 text-white text-sm rounded-lg hover:bg-green-700 transition-colors"
+                  >
+                    Cambiar
+                  </Link>
                 </div>
 
                 <div className="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
                   <div className="flex items-center">
                     <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
-                      <Bell className="w-5 h-5 text-green-600" />
-                    </div>
-                    <div className="ml-3">
-                      <p className="font-medium text-gray-900">
-                        Alertas de seguridad
-                      </p>
-                      <p className="text-sm text-gray-500">
-                        Configura alertas para actividades sospechosas
-                      </p>
-                    </div>
-                  </div>
-                  <button className="text-green-600 hover:text-green-700">
-                    <ChevronRight className="w-5 h-5" />
-                  </button>
-                </div>
-
-                <div className="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
-                  <div className="flex items-center">
-                    <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
-                      <User className="w-5 h-5 text-green-600" />
+                      <svg
+                        className="w-5 h-5 text-green-600"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M7 11V7C7 5.67392 7.52678 4.40215 8.46447 3.46447C9.40215 2.52678 10.6739 2 12 2C13.3261 2 14.5979 2.52678 15.5355 3.46447C16.4732 4.40215 17 5.67392 17 7V11"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M5 11H19C20.1046 11 21 11.8954 21 13V20C21 21.1046 20.1046 22 19 22H5C3.89543 22 3 21.1046 3 20V13C3 11.8954 3.89543 11 5 11Z"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M12 16.5V17.5"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
                     </div>
                     <div className="ml-3">
                       <p className="font-medium text-gray-900">
@@ -531,8 +346,54 @@ export const ProfilePage = () => {
                       </p>
                     </div>
                   </div>
-                  <button className="text-green-600 hover:text-green-700">
-                    <ChevronRight className="w-5 h-5" />
+                  <button className="px-3 py-1.5 bg-gray-200 text-gray-700 text-sm rounded-lg hover:bg-gray-300 transition-colors">
+                    Activar
+                  </button>
+                </div>
+
+                <div className="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
+                  <div className="flex items-center">
+                    <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                      <svg
+                        className="w-5 h-5 text-green-600"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M12 16V12"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M12 8H12.01"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </div>
+                    <div className="ml-3">
+                      <p className="font-medium text-gray-900">
+                        Preguntas de seguridad
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        Configura preguntas para recuperar tu cuenta
+                      </p>
+                    </div>
+                  </div>
+                  <button className="px-3 py-1.5 bg-green-600 text-white text-sm rounded-lg hover:bg-green-700 transition-colors">
+                    Configurar
                   </button>
                 </div>
               </div>
@@ -608,256 +469,6 @@ export const ProfilePage = () => {
                 </div>
               </div>
             </motion.div>
-
-            <motion.div
-              className="bg-white rounded-xl shadow-sm border border-gray-100 p-6"
-              variants={itemVariants}
-            >
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                Actividad reciente
-              </h3>
-
-              <div className="space-y-4">
-                <div className="flex items-start">
-                  <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center">
-                    <User className="w-5 h-5 text-gray-600" />
-                  </div>
-                  <div className="ml-3">
-                    <p className="font-medium text-gray-900">
-                      Inicio de sesión exitoso
-                    </p>
-                    <p className="text-sm text-gray-500">
-                      Hoy, 10:45 AM • La Habana, Cuba
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start">
-                  <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center">
-                    <Settings className="w-5 h-5 text-gray-600" />
-                  </div>
-                  <div className="ml-3">
-                    <p className="font-medium text-gray-900">
-                      Cambio de contraseña
-                    </p>
-                    <p className="text-sm text-gray-500">
-                      Hace 15 días • La Habana, Cuba
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start">
-                  <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center">
-                    <User className="w-5 h-5 text-gray-600" />
-                  </div>
-                  <div className="ml-3">
-                    <p className="font-medium text-gray-900">
-                      Inicio de sesión exitoso
-                    </p>
-                    <p className="text-sm text-gray-500">
-                      Hace 16 días • La Habana, Cuba
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <button className="mt-4 w-full py-2 text-sm text-green-600 hover:text-green-700 flex items-center justify-center">
-                Ver todo el historial de actividad{" "}
-                <ChevronRight className="w-4 h-4 ml-1" />
-              </button>
-            </motion.div>
-          </motion.div>
-        );
-      case "documents":
-        return (
-          <motion.div
-            className="bg-white rounded-xl shadow-sm border border-gray-100 p-6"
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-          >
-            <h3 className="text-lg font-semibold text-gray-900 mb-6">
-              Documentos y Estados de Cuenta
-            </h3>
-
-            <div className="space-y-6">
-              <motion.div variants={itemVariants}>
-                <h4 className="font-medium text-gray-900 mb-3">
-                  Estados de cuenta recientes
-                </h4>
-                <div className="space-y-3">
-                  {[
-                    { month: "Abril 2023", date: "01/05/2023", size: "1.2 MB" },
-                    { month: "Marzo 2023", date: "01/04/2023", size: "1.1 MB" },
-                    {
-                      month: "Febrero 2023",
-                      date: "01/03/2023",
-                      size: "1.3 MB",
-                    },
-                  ].map((statement, index) => (
-                    <div
-                      key={index}
-                      className="flex justify-between items-center p-3 bg-gray-50 rounded-lg"
-                    >
-                      <div className="flex items-center">
-                        <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                          <svg
-                            className="w-5 h-5 text-blue-600"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                            <path
-                              d="M14 2V8H20"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                            <path
-                              d="M16 13H8"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                            <path
-                              d="M16 17H8"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                            <path
-                              d="M10 9H9H8"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                          </svg>
-                        </div>
-                        <div className="ml-3">
-                          <p className="font-medium text-gray-900">
-                            Estado de cuenta - {statement.month}
-                          </p>
-                          <p className="text-xs text-gray-500">
-                            Generado el {statement.date} • {statement.size}
-                          </p>
-                        </div>
-                      </div>
-                      <button className="text-green-600 hover:text-green-700">
-                        <Download className="w-5 h-5" />
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
-
-              <motion.div variants={itemVariants}>
-                <h4 className="font-medium text-gray-900 mb-3">
-                  Documentos importantes
-                </h4>
-                <div className="space-y-3">
-                  {[
-                    {
-                      name: "Contrato de cuenta",
-                      date: "15/01/2023",
-                      size: "450 KB",
-                    },
-                    {
-                      name: "Términos y condiciones",
-                      date: "15/01/2023",
-                      size: "320 KB",
-                    },
-                    {
-                      name: "Política de privacidad",
-                      date: "15/01/2023",
-                      size: "280 KB",
-                    },
-                  ].map((doc, index) => (
-                    <div
-                      key={index}
-                      className="flex justify-between items-center p-3 bg-gray-50 rounded-lg"
-                    >
-                      <div className="flex items-center">
-                        <div className="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center">
-                          <svg
-                            className="w-5 h-5 text-amber-600"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                            <path
-                              d="M14 2V8H20"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                            <path
-                              d="M16 13H8"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                            <path
-                              d="M16 17H8"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                            <path
-                              d="M10 9H9H8"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                          </svg>
-                        </div>
-                        <div className="ml-3">
-                          <p className="font-medium text-gray-900">
-                            {doc.name}
-                          </p>
-                          <p className="text-xs text-gray-500">
-                            Actualizado el {doc.date} • {doc.size}
-                          </p>
-                        </div>
-                      </div>
-                      <button className="text-green-600 hover:text-green-700">
-                        <Download className="w-5 h-5" />
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
-
-              <motion.div
-                variants={itemVariants}
-                className="pt-4 border-t border-gray-200"
-              >
-                <button className="w-full py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors">
-                  Solicitar documentos adicionales
-                </button>
-              </motion.div>
-            </div>
           </motion.div>
         );
       default:
@@ -868,6 +479,14 @@ export const ProfilePage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
+
+      {notification && (
+        <Notification
+          message={notification.message}
+          error={notification.error}
+          path={notification.path}
+        />
+      )}
 
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-5xl mx-auto">
@@ -887,22 +506,6 @@ export const ProfilePage = () => {
               </div>
 
               <nav className="space-y-1">
-                <button
-                  onClick={() => setActiveTab("overview")}
-                  className={`w-full flex items-center px-4 py-2.5 text-sm font-medium rounded-lg transition-colors ${
-                    activeTab === "overview"
-                      ? "bg-green-600 text-white"
-                      : "text-gray-700 hover:bg-gray-100"
-                  }`}
-                >
-                  <CreditCard
-                    className={`w-5 h-5 mr-3 ${
-                      activeTab === "overview" ? "text-white" : "text-gray-500"
-                    }`}
-                  />
-                  Resumen
-                </button>
-
                 <button
                   onClick={() => setActiveTab("personal")}
                   className={`w-full flex items-center px-4 py-2.5 text-sm font-medium rounded-lg transition-colors ${
@@ -933,61 +536,6 @@ export const ProfilePage = () => {
                     }`}
                   />
                   Seguridad
-                </button>
-
-                <button
-                  onClick={() => setActiveTab("documents")}
-                  className={`w-full flex items-center px-4 py-2.5 text-sm font-medium rounded-lg transition-colors ${
-                    activeTab === "documents"
-                      ? "bg-green-600 text-white"
-                      : "text-gray-700 hover:bg-gray-100"
-                  }`}
-                >
-                  <svg
-                    className={`w-5 h-5 mr-3 ${
-                      activeTab === "documents" ? "text-white" : "text-gray-500"
-                    }`}
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M14 2V8H20"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M16 13H8"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M16 17H8"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M10 9H9H8"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                  Documentos
                 </button>
               </nav>
             </div>
