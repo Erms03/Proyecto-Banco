@@ -221,14 +221,14 @@ export const Header = () => {
               Servicios
             </Link>
             <Link
-              to="/nosotros"
+              to="/about"
               className="py-2 text-gray-800 hover:text-green-600 font-medium transition-colors"
               onClick={() => setIsOpen(false)}
             >
               Nosotros
             </Link>
             <Link
-              to="/contacto"
+              to="/contact"
               className="py-2 text-gray-800 hover:text-green-600 font-medium transition-colors"
               onClick={() => setIsOpen(false)}
             >
