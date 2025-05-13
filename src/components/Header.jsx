@@ -161,7 +161,7 @@ export const Header = () => {
 
       {/* Menú móvil */}
       <div
-        className={`fixed inset-y-0 right-0 w-72 bg-white shadow-xl z-50 transform transition-transform duration-300 ease-in-out ${
+        className={`fixed inset-y-0 right-0 w-72 bg-white shadow-xl z-50 transform transition-transform duration-300 ease-in-out h-dvh ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -270,7 +270,7 @@ export const Header = () => {
       {/* Overlay para cerrar el menú al hacer clic fuera */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-40"
+          className="fixed inset-0 bg-black/50 z-40 h-dvh"
           onClick={() => setIsOpen(false)}
         ></div>
       )}
