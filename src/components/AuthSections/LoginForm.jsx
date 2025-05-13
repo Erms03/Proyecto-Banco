@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { Mail } from "lucide-react";
 import { PasswordInput } from "../PasswordInput";
 import { useRegister } from "../../hooks/useRegister";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../..//context/AuthContext";
 import { useUpdateRegisterForm } from "../../hooks/useUpdateRegisterForm";
 import { LoginSideFeatures } from "./AuthSideContent";
 
